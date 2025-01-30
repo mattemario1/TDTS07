@@ -1,0 +1,8 @@
+Traffic Light(1 s) = 1000
+Traffic Light(2 s) = 0000
+Traffic Light(3 s) = 1100
+Traffic Light(4 s) = 1000
+Traffic Light(5 s) = 0011
+Traffic Light(6 s) = 0100
+Traffic Light(8 s) = 0010
+Traffic Light(9 s) = 0100
