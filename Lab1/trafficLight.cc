@@ -8,6 +8,13 @@ Trafficlight::Trafficlight(sc_module_name name)
   W_trafficlight.initialize(false);
   E_trafficlight.initialize(false);
 
+  roadState = NOTHING;
+
+  SC_THREAD(N_light_thread);
+  SC_THREAD(S_light_thread);
+  SC_THREAD(E_light_thread);
+  SC_THREAD(W_light_thread);
+
   SC_METHOD(evaluate_trafficlight_method);
   dont_initialize();
   sensitive << N_sensor << S_sensor << E_sensor << W_sensor;
@@ -16,73 +23,68 @@ Trafficlight::Trafficlight(sc_module_name name)
 
 void Trafficlight::evaluate_trafficlight_method()
 {
-  bool N_car = N_sensor->read();
-  bool S_car = S_sensor->read();
-  bool E_car = E_sensor->read();
-  bool W_car = W_sensor->read();
-
-
-  if (N_car) {
-    N_light_event.notify();
-  }
-  if (S_car) {
-    
-  }
-  if (E_car) {
-    
-  }
-  if (W_car) {
-    
-  }
-
-  // if (N_car & S_car) {
-  //   N_trafficlight->write(true);
-  //   S_trafficlight->write(true);
-  //   E_trafficlight->write(false);
-  //   W_trafficlight->write(false);
-  // }
-  // else if (N_car & !S_car) {
-  //   N_trafficlight->write(true);
-  //   S_trafficlight->write(false);
-  //   E_trafficlight->write(false);
-  //   W_trafficlight->write(false);
-  // }
-  // else if (!N_car & S_car) {
-  //   N_trafficlight->write(false);
-  //   S_trafficlight->write(true);
-  //   E_trafficlight->write(false);
-  //   W_trafficlight->write(false);
-  // }
-  // else if (E_car & W_car) {
-  //   N_trafficlight->write(false);
-  //   S_trafficlight->write(false);
-  //   E_trafficlight->write(true);
-  //   W_trafficlight->write(true);
-  // }
-  // else if (E_car & !W_car) {
-  //   N_trafficlight->write(false);
-  //   S_trafficlight->write(false);
-  //   E_trafficlight->write(true);
-  //   W_trafficlight->write(false);
-  // }
-  // else if (!E_car & W_car) {
-  //   N_trafficlight->write(false);
-  //   S_trafficlight->write(false);
-  //   E_trafficlight->write(false);
-  //   W_trafficlight->write(true);
-  // }
-  // else {
-  //   N_trafficlight->write(false);
-  //   S_trafficlight->write(false);
-  //   E_trafficlight->write(false);
-  //   W_trafficlight->write(false);
-  // }
+  N_car.write(N_sensor->read() | N_car.read());
+  S_car.write(S_sensor->read() | S_car.read());
+  E_car.write(E_sensor->read() | E_car.read());
+  W_car.write(W_sensor->read() | W_car.read());
 }
 
-void n_light_thread()
+void Trafficlight::N_light_thread()
 {
   for(;;){
-    wait(N_light_event)
-    
+    if (roadState.read() != EW || N_car.read()) {
+      N_trafficlight->write(true);
+      roadState.write(NS);
+      wait(5, SC_SEC);
+      N_trafficlight->write(false);
+      N_car.write(false);
+      if (S_car.read() == false)
+        roadState.write(EW);
+    }
+  }
+}
+
+void Trafficlight::S_light_thread()
+{
+  for(;;){
+    if (roadState.read() != EW || S_car.read()) {
+      S_trafficlight->write(true);
+      roadState.write(NS);
+      wait(5, SC_SEC);
+      S_trafficlight->write(false);
+      S_car.write(false);
+      if (N_car.read() == false)
+        roadState.write(EW);
+    }
+  }
+}
+
+void Trafficlight::E_light_thread()
+{
+  for(;;){
+    if (roadState.read() != NS || E_car.read()) {
+      E_trafficlight->write(true);
+      roadState.write(EW);
+      wait(5, SC_SEC);
+      E_trafficlight->write(false);
+      E_car.write(false);
+      if (W_car.read() == false)
+        roadState.write(NS);
+    }
+  }
+}
+
+void Trafficlight::W_light_thread()
+{
+  for(;;){
+    if (roadState.read() != NS || W_car.read()) {
+      W_trafficlight->write(true);
+      roadState.write(EW);
+      wait(5, SC_SEC);
+      W_trafficlight->write(false);
+      W_car.write(false);
+      if (E_car.read() == false)
+        roadState.write(NS);
+    }
   }
 }

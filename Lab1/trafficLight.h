@@ -14,14 +14,26 @@ SC_MODULE(Trafficlight) {
   sc_out<bool> E_trafficlight;
   sc_out<bool> W_trafficlight;
 
-  sc_event N_light_event;
+  // sc_event light_event;
+
+
+  enum directionState {NS,EW,NOTHING};
+  sc_signal<directionState> roadState;
+  sc_signal<bool> N_car;
+  sc_signal<bool> S_car;
+  sc_signal<bool> E_car;
+  sc_signal<bool> W_car;
 
   SC_HAS_PROCESS(Trafficlight);
   Trafficlight(sc_module_name name);
 
   void evaluate_trafficlight_method();
 
-  void n_light_thread();
+  void N_light_thread();
+  void S_light_thread();
+  void E_light_thread();
+  void W_light_thread();
+
 
 };
 
