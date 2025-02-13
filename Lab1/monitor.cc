@@ -10,7 +10,7 @@ Monitor::Monitor(sc_module_name name, char *outfile)
 
   SC_METHOD(monitor_method);
   dont_initialize();
-  sensitive << N_trafficlight << S_trafficlight << E_trafficlight << W_trafficlight;
+  sensitive << N_trafficlight << S_trafficlight << E_trafficlight << W_trafficlight << N_sensor << S_sensor << E_sensor << W_sensor;
 }
 
 Monitor::~Monitor()
@@ -24,6 +24,10 @@ void Monitor::monitor_method()
   int S_light = S_trafficlight->read();
   int E_light = E_trafficlight->read();
   int W_light = W_trafficlight->read();
-  *out << "Traffic Light(" << sc_time_stamp() << ") = " << N_light << S_light << E_light << W_light << endl;
+  int N_sensors = N_sensor->read();
+  int S_sensors = S_sensor->read();
+  int E_sensors = E_sensor->read();
+  int W_sensors = W_sensor->read();
+  *out << "Traffic Light(" << sc_time_stamp() << ") = " << N_light << S_light << E_light << W_light << endl << "Sensor(" << sc_time_stamp() << ") = " << N_sensors << S_sensors << E_sensors << W_sensors << endl;
 }
 

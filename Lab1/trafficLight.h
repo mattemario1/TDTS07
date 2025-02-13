@@ -23,11 +23,16 @@ SC_MODULE(Trafficlight) {
   sc_signal<bool> S_car;
   sc_signal<bool> E_car;
   sc_signal<bool> W_car;
+  sc_signal<bool> N_car_old;
+  sc_signal<bool> S_car_old;
+  sc_signal<bool> E_car_old;
+  sc_signal<bool> W_car_old;
 
   SC_HAS_PROCESS(Trafficlight);
   Trafficlight(sc_module_name name);
 
   void evaluate_trafficlight_method();
+  void road_direction_method();
 
   void N_light_thread();
   void S_light_thread();

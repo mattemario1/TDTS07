@@ -33,7 +33,7 @@ int sc_main(int argc, char **argv)
   // Connect the channels to the ports.
   trafficlight(N_car_sig, S_car_sig, E_car_sig, W_car_sig, N_light_sig, S_light_sig, E_light_sig, W_light_sig);
   gen(N_car_sig, S_car_sig, E_car_sig, W_car_sig);
-  monitor(N_light_sig, S_light_sig, E_light_sig, W_light_sig);
+  monitor(N_light_sig, S_light_sig, E_light_sig, W_light_sig, N_car_sig, S_car_sig, E_car_sig, W_car_sig);
 
   // Start the simulation.
   sc_start(sim_time);

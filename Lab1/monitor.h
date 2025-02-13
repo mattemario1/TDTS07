@@ -11,6 +11,10 @@ SC_MODULE(Monitor) {
   sc_in<bool> S_trafficlight;
   sc_in<bool> E_trafficlight;
   sc_in<bool> W_trafficlight;
+  sc_in<bool> N_sensor;
+  sc_in<bool> S_sensor;
+  sc_in<bool> E_sensor;
+  sc_in<bool> W_sensor;
 
   SC_HAS_PROCESS(Monitor);
   Monitor(sc_module_name name, char *outfile);
