@@ -17,18 +17,9 @@ SC_MODULE(Trafficlight) {
   sc_event change_state_event;
   sc_event change_state_done;
 
-
-  enum directionState {NS,EW,NOTHING};
   sc_signal<bool> roadState;
   sc_signal<bool> waitState;
-  sc_signal<bool> N_car;
-  sc_signal<bool> S_car;
-  sc_signal<bool> E_car;
-  sc_signal<bool> W_car;
-  sc_signal<bool> N_car_old;
-  sc_signal<bool> S_car_old;
-  sc_signal<bool> E_car_old;
-  sc_signal<bool> W_car_old;
+
 
   SC_HAS_PROCESS(Trafficlight);
   Trafficlight(sc_module_name name);

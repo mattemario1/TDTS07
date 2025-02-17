@@ -1,7 +1,14 @@
 #include <systemc.h>
+#include <iostream>
+#include <fstream>
+#include <cstdlib>
+#include <ctime>
 #include "trafficLight.h"
 #include "input_gen.h"
 #include "monitor.h"
+
+void generate_random_cars(const std::string& filename, int numRows);
+
 
 int sc_main(int argc, char **argv)
 {
@@ -11,8 +18,13 @@ int sc_main(int argc, char **argv)
   // 3. the file to write output data.
   assert(argc == 4);
 
-  sc_time sim_time(atof(argv[1]), SC_SEC);
   char *infile = argv[2];
+  sc_time sim_time(atof(argv[1]), SC_SEC);
+
+  if (std::strstr(infile, "input_file_random.txt")){
+    generate_random_cars(infile, atof(argv[1]));
+  } 
+
   char *outfile = argv[3];
 
   // Create channels.
@@ -40,3 +52,34 @@ int sc_main(int argc, char **argv)
 
   return 0;
 }
+
+void generate_random_cars(const std::string& filename, int numRows)
+{
+  // Open file for writing
+  std::ofstream outFile(filename);
+
+  cout << "hello" << std::endl;
+
+  if (!outFile) {
+    std::cerr << "Error opening file for writing." << std::endl;
+    return;
+  }
+
+  std::srand(static_cast<unsigned int>(std::time(0)));
+
+  for (int i = 0; i < numRows/5; ++i) {
+    int randomBit = std::rand() % 16; 
+
+    for (int n = 4; n >= 0; --n) {
+      for (int j = 3; j >= 0; --j) {
+          outFile << ((randomBit >> j) & 1) << " ";
+      }
+      outFile << std::endl; 
+    }
+
+  }
+
+  // Close the file
+  outFile.close();
+}
+
