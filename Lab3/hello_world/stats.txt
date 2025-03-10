@@ -14,9 +14,9 @@ Scratchpad memories disabled
 Instruction scratchpad memories disabled
 Queue memories disabled
 Advanced statistics on, Access traces off, TG traces off
-Simulation executed without OCP interfacing (where applicable)
+Simulation executed with OCP interfacing (where applicable)
 Master system clock period set to 5 ns
-VCD waveforms off
+VCD waveforms on
 Partitioned scratchpad analysis off, /dev/pts prompt skipped
 Data cache of 4096 bytes, 4-way set associative, having 0 wait states
 Cache write policy: write through
@@ -29,7 +29,7 @@ Statistics collected since benchmark request
 ---------------------------------------------------------------------------------
 
 
-Simulation executed: Thu Mar  6 14:11:47 2025
+Simulation executed: Mon Mar 10 16:36:21 2025
 Elapsed time - overall simulation: 0:00 minutes
 Total simulated master system cycles: 897 (4485 ns)
 CPU cycles simulated per second: inf
@@ -134,3 +134,73 @@ I-Cache Miss Rate: 5.71%
 ---------------------------------------------------------------------------------
 
 
+==============================================================================
+----------------
+Power estimation
+----------------
+
+  Energy spent:
+ARM 0:
+   core:         23962.59 [pJ]
+   icache:       22503.96 [pJ]
+   dcache:        6652.29 [pJ]
+   scratch:          0.00 [pJ]
+   i-scratch:        0.00 [pJ]
+RAM 00:           9827.64 [pJ]
+RAM 01:              0.00 [pJ]
+RAM 02:              0.00 [pJ]
+RAM 03:              0.00 [pJ]
+Bus 0:
+   typ:              0.00 [pJ]
+   max:              0.00 [pJ]
+   min:              0.00 [pJ]
+-------------------------------------
+Partial sums:
+   ARM cores:    23962.59 [pJ]
+   icaches:      22503.96 [pJ]
+   dcaches:       6652.29 [pJ]
+   scratches:        0.00 [pJ]
+   i-scratches:      0.00 [pJ]
+RAMs:             9827.64 [pJ]
+DMAs:                0.00 [pJ]
+Bridges:             0.00 [pJ]
+Buses:
+   typ:              0.00 [pJ]
+   max:              0.00 [pJ]
+   min:              0.00 [pJ]
+-------------------------------------
+-------------------------------------
+Total:           62946.48 [pJ] typ
+Total:           62946.48 [pJ] max
+Total:           62946.48 [pJ] min
+------------------------------------------------------------------------------
+
+  Power spent:
+ARM 0:
+   core:             9.53 [mW]
+   icache:           8.95 [mW]
+   dcache:           2.65 [mW]
+   scratch:          0.00 [mW]
+   i-scratch:        0.00 [mW]
+RAM 00:              3.91 [mW]
+RAM 01:              0.00 [mW]
+RAM 02:              0.00 [mW]
+RAM 03:              0.00 [mW]
+Bus 0:
+   typ:              0.00 [mW]
+   max:              0.00 [mW]
+   min:              0.00 [mW]
+==============================================================================
+RAM 0:  48 [reads]  12 [writes] 0 [stalls] 0 [noops]
+	idle energy         0.00 pJ
+RAM 1:  0 [reads]  0 [writes] 0 [stalls] 0 [noops]
+	idle energy         0.00 pJ
+RAM 2:  0 [reads]  0 [writes] 0 [stalls] 0 [noops]
+RAM 3:  0 [reads]  0 [writes] 0 [stalls] 0 [noops]
+==============================================================================
+Cache Accesses:  tag_R tagW dataR datalW datawW dirtyR dirtyW bitR bitW
+Instruction cache
+CACHE 0  -  156 8 156 8 0 156 8 0 0
+Data cache
+CACHE 0  -  70 4 58 4 10 70 4 0 0
+==============================================================================
